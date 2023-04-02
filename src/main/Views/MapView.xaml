@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ei8.Cortex.Gps.Mapper.Views.MapView"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             xmlns:vm="clr-namespace:ei8.Cortex.Gps.Mapper.ViewModels"
+             xmlns:behaviors="clr-namespace:ei8.Cortex.Gps.Mapper.Behaviors"
+             xmlns:models="clr-namespace:ei8.Cortex.Gps.Mapper.Models"
+             x:DataType="vm:MapViewModel"
+             Title="MapView">
+    <Grid RowDefinitions="Auto,Auto,*"
+          ColumnDefinitions=".25*,.75*"
+          Padding="10"
+          ColumnSpacing="10"
+          RowSpacing="10">
+        <Button  Grid.ColumnSpan="2" Text="Get Current Location" 
+                Command="{Binding GetCurrentLocationCommand}"/>
+       
+        <Entry Placeholder="Enter Url" 
+               Grid.Row="1"
+               Text="{Binding Url}"
+               Grid.Column="1"/>
+        <Button Text="Reload"
+                Command="{Binding AddLocationCommand}"
+                Grid.Row="1"
+                />
+        <Grid Grid.Row="2"
+              Grid.ColumnSpan="3">
+            <maps:Map Grid.Row="1" 
+                  ItemsSource="{Binding Places}">
+                <maps:Map.Behaviors>
+                    <behaviors:MapBehavior 
+                    IsReady="{Binding IsReady}"
+                    Places="{Binding BindablePlaces}"
+                    Locations="{Binding BindableLocation}"/>
+                </maps:Map.Behaviors>
+            </maps:Map>
+        </Grid>
+           
+    </Grid>
+</ContentPage>
