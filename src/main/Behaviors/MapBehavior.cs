@@ -87,15 +87,25 @@ namespace ei8.Cortex.Gps.Mapper.Behaviors
 
         private static void OnAddPlaces(BindableObject view, object oldValue, object newValue)
         {
-            var mapBehavior = view as MapBehavior;
-
-            if (mapBehavior != null)
+            try
             {
-                mapBehavior.ChangePosition();
 
-                if (mapBehavior.Places.Count() == 1)
-                    mapBehavior.DrawPolyline();
+
+                var mapBehavior = view as MapBehavior;
+
+                if (mapBehavior != null)
+                {
+                    mapBehavior.ChangePosition();
+
+                    //if (mapBehavior.Places.Count() == 1)
+                        mapBehavior.DrawPolyline();
+                }
             }
+            catch (Exception ex)
+            {
+                var myException = ex;
+            }
+
         }
 
         private void DrawLocation()

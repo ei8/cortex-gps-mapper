@@ -89,7 +89,19 @@ namespace ei8.Cortex.Gps.Mapper.ViewModels
             {
                 if(jsonDeserialized != null)
                 {
-                    foreach(var item in jsonDeserialized.Items)
+                    Places.Clear();
+                    jsonDeserialized.Items.ForEach(item => Places.Add(new Place()
+                    {
+                        Location = new Location()
+                        {
+                            Latitude = Convert.ToDouble(item.Tag.Split(',')[0]),
+                            Longitude = Convert.ToDouble(item.Tag.Split(",")[1])
+                        }
+                    }));
+
+                    BindablePlaces = new ObservableCollection<Place>(Places.ToList());
+
+                    foreach (var item in jsonDeserialized.Items)
                     {
                         var data = item.Tag.Split(',');
                         Location loc = new Location()
@@ -100,6 +112,9 @@ namespace ei8.Cortex.Gps.Mapper.ViewModels
                         Locations.Add(loc);
                     }
                     BindableLocation = new ObservableCollection<Location>(Locations);
+
+                   
+
                     IsReady = true;
 
                 }
