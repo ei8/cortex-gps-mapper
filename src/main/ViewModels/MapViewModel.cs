@@ -6,6 +6,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using Android.Locations;
+using Location = Microsoft.Maui.Devices.Sensors.Location;
 
 namespace ei8.Cortex.Gps.Mapper.ViewModels
 {
@@ -99,7 +101,21 @@ namespace ei8.Cortex.Gps.Mapper.ViewModels
                         };
                         Locations.Add(loc);
                     }
+                    Places.Clear();
+                    var place = new Place()
+                    {
+                        Location = Locations.First(),
+                        Address = "",
+                        Description = "Start"
+                    };
+
+                    Places.Add(place);
+                    var placeList = new List<Place>() { place };
+                    BindablePlaces = new ObservableCollection<Place>(placeList);
+
                     BindableLocation = new ObservableCollection<Location>(Locations);
+
+                    
                     IsReady = true;
 
                 }
